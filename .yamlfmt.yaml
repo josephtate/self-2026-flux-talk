@@ -1,9 +1,0 @@
-formatter:
-  type: basic
-  indent: 2
-  include_document_start: true
-  retain_line_breaks: true
-  scan_sub_directories: true
-exclude:
-  - .git
-  - .validation

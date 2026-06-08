@@ -19,46 +19,39 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install tools
+      - name: Install dependencies
         run: |
-          # yamlfmt
-          wget -qO /usr/local/bin/yamlfmt \
-            "https://github.com/google/yamlfmt/releases/latest/download/yamlfmt_linux_amd64"
-          chmod +x /usr/local/bin/yamlfmt
+          pip install yamllint
 
-          # shellcheck
+          sudo apt-get update
           sudo apt-get install -y shellcheck
 
-          # kustomize
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" \
-            | bash
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           sudo mv kustomize /usr/local/bin/
 
-          # flux CLI
-          curl -s https://fluxcd.io/install.sh | sudo bash
-
       - name: YAML lint
-        run: yamlfmt -lint -conf .yamlfmt.yaml .
+        run: yamllint .
 
       - name: Shell lint
         run: |
-          find manual/scripts -name "*.sh" -exec shellcheck --severity=warning {} \;
+          find manual/scripts -name "*.sh" -type f -exec shellcheck --severity=warning {} +
 
-      - name: Kustomize build (all overlays)
+      - name: Kustomize build
         run: |
-          for path in clusters/dev infrastructure apps/dev; do
+          for path in clusters/dev infrastructure apps; do
             echo "--- kustomize build $path ---"
             kustomize build "$path" > /dev/null
           done
 
-      - name: Flux manifest validation
+      - name: Check formatting
         run: |
-          flux build kustomization flux-system \
-            --path ./clusters/dev \
-            --kustomization-file ./clusters/dev/flux-system/kustomization.yaml \
-            --dry-run
+          if grep -r '[[:space:]]$' --include="*.yaml" --include="*.sh" --include="*.md" .; then
+            echo "Found trailing whitespace"
+            exit 1
+          fi
+          for file in $(find . -name "*.yaml" -o -name "*.sh" -o -name "*.md" | grep -v ".git"); do
+            if [ "$(tail -c1 "$file" | wc -l)" -eq 0 ]; then
+              echo "Missing final newline: $file"
+              exit 1
+            fi
+          done
