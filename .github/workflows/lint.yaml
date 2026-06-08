@@ -38,7 +38,7 @@ jobs:
 
       - name: Kustomize build
         run: |
-          for path in clusters/dev infrastructure apps; do
+          for path in clusters/dev/flux-system infrastructure apps; do
             echo "--- kustomize build $path ---"
             kustomize build "$path" > /dev/null
           done
