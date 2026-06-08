@@ -1,4 +1,4 @@
-# platform-k8s-demo
+# self-2026-flux-talk
 
 Demo repository for the talk: **"GitOps with FluxCD: Making K8s Deployments Repeatable and Reversible"**
 
@@ -24,15 +24,15 @@ This is a minimal but structurally faithful version of a production GitOps platf
 
 ```bash
 # 1. Clone and configure credentials
-git clone https://github.com/your-org/platform-k8s-demo.git
-cd platform-k8s-demo
+git clone https://github.com/josephtate/self-2026-flux-talk.git
+cd self-2026-flux-talk
 
 # 2. Create your credentials file (gitignored)
 cat > .envrc.${USER} << 'EOF'
 export GITHUB_USER=your-github-username
 export GITHUB_TOKEN=ghp_your_token_here
-export GITHUB_OWNER=your-org
-export GITHUB_REPO=platform-k8s-demo
+export GITHUB_OWNER=josephtate
+export GITHUB_REPO=self-2026-flux-talk
 EOF
 
 # 3. Load environment

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Bootstrap script for platform-k8s-demo (dev environment only).
+# Bootstrap script for self-2026-flux-talk (dev environment only).
 #
 # This script intentionally uses 'flux install' rather than 'flux bootstrap github'.
 # The difference matters:
@@ -25,7 +25,7 @@ ENVIRONMENT="${1:-dev}"
 CLUSTER_NAME="${CLUSTER_NAME:-dev-cluster}"
 GITHUB_USER="${GITHUB_USER:-}"
 GITHUB_TOKEN="${GITHUB_TOKEN:-}"
-GITHUB_REPO="${GITHUB_REPO:-platform-k8s-demo}"
+GITHUB_REPO="${GITHUB_REPO:-self-2026-flux-talk}"
 GITHUB_BRANCH="${GITHUB_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}"
 GITHUB_OWNER="${GITHUB_OWNER:-your-org-here}"
 
@@ -108,7 +108,7 @@ create_git_credentials() {
 }
 
 create_git_source() {
-    if kubectl get gitrepository platform-k8s-demo -n flux-system --context="$CLUSTER_NAME" &>/dev/null; then
+    if kubectl get gitrepository self-2026-flux-talk -n flux-system --context="$CLUSTER_NAME" &>/dev/null; then
         success "GitRepository already exists — skipping"
         return 0
     fi
@@ -136,7 +136,7 @@ create_git_source() {
 
 main() {
     info "========================================="
-    info "  platform-k8s-demo bootstrap ($ENVIRONMENT)"
+    info "  self-2026-flux-talk bootstrap ($ENVIRONMENT)"
     info "========================================="
     info "Cluster: $CLUSTER_NAME"
     info "Branch:  $GITHUB_BRANCH"
