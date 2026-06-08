@@ -1,0 +1,30 @@
+---
+# Inventory of resources that exist in the cluster but are NOT declared as
+# YAML files in this repository. The cross-reference validator needs to know
+# about these to avoid false-positives.
+#
+# Categories:
+# - Resources created by bootstrap.sh before Flux runs
+# - Resources dynamically created by operators (cert-manager TLS secrets, etc.)
+#
+# When you add a new operator that creates resources your manifests reference,
+# add an entry here. This file requires manual maintenance.
+
+resources:
+  # Created by bootstrap.sh: the git credentials secret for Flux
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: flux-system
+      namespace: flux-system
+    # Created by bootstrap.sh from GITHUB_USER + GITHUB_TOKEN
+    # Not in git — contains credentials
+
+  # Created by bootstrap.sh: environment variable substitution values
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: cluster-vars
+      namespace: flux-system
+    # Contains GHCR_USERNAME and other per-cluster variables
+    # Set at bootstrap time, not version-controlled

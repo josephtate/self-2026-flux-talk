@@ -1,0 +1,13 @@
+# User-specific credentials — never commit
+.envrc.*
+
+# direnv caches
+.direnv/
+
+# Generated validation output
+/tmp/
+
+# Editor files
+.vscode/
+*.swp
+*~

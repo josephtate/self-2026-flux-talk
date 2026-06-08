@@ -1,0 +1,21 @@
+---
+# Dev overlay for apps.
+#
+# The $patch: delete pattern removes resources that exist in the base but
+# shouldn't run in dev (e.g., resources that need prod-only credentials).
+# This keeps the base as the single source of truth — dev just removes
+# what doesn't apply rather than maintaining a separate copy.
+#
+# In this demo, all base resources apply in dev, so no patches are needed.
+# In production use, this file would look like:
+#
+# patches:
+#   - target:
+#       kind: ExternalSecret
+#       name: some-prod-only-secret
+#     patch: |
+#       $patch: delete
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../base
