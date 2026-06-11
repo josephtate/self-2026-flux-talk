@@ -1,7 +1,8 @@
 ENVIRONMENT ?= dev
 CLUSTER_NAME ?= dev-cluster
+NAMESPACE_PREFIX ?= dev
 
-.PHONY: bootstrap-dev teardown-dev lint validate-kustomize update-dev-branch minikube-start reconcile
+.PHONY: bootstrap-dev teardown-dev lint validate-kustomize update-dev-branch minikube-start reconcile open-app
 
 # ── Bootstrap / Teardown ─────────────────────────────────────────────────────
 
@@ -58,6 +59,10 @@ flux-status:
 
 flux-watch:
 	flux get kustomizations --watch
+
+open-app:
+	@echo "Opening http://localhost:8080 — Ctrl-C to stop"
+	kubectl port-forward -n $(NAMESPACE_PREFIX)-demo-app svc/demo-app 8080:80 --context=$(CLUSTER_NAME)
 
 reconcile:
 	flux reconcile source git self-2026-flux-talk --timeout=30s
