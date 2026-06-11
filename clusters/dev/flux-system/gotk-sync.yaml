@@ -26,6 +26,9 @@ spec:
     kind: GitRepository
     name: self-2026-flux-talk
   postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-vars  # contains GITHUB_BRANCH, written by bootstrap.sh
     substitute:
       ENVIRONMENT: "dev"
       NAMESPACE_PREFIX: "dev"
