@@ -60,7 +60,7 @@ flux-watch:
 	flux get kustomizations --watch
 
 reconcile:
-	flux reconcile source git self-2026-flux-talk
-	flux reconcile kustomization flux-system
-	flux reconcile kustomization infrastructure --with-source
-	flux reconcile kustomization apps --with-source
+	flux reconcile source git self-2026-flux-talk --timeout=30s
+	flux reconcile kustomization flux-system --timeout=30s
+	flux reconcile kustomization infrastructure --with-source --timeout=30s
+	flux reconcile kustomization apps --with-source --timeout=30s
