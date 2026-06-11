@@ -6,11 +6,10 @@ metadata:
   namespace: ${NAMESPACE_PREFIX}-demo-app
 spec:
   entryPoints:
-    - websecure
+    - web
   routes:
     - match: Host(`demo-app.${DOMAIN}`)
       kind: Rule
       services:
         - name: demo-app
           port: 80
-  tls: {}

@@ -56,31 +56,8 @@ spec:
       CLUSTER_NAME: "dev-cluster"
       DOMAIN: "dev-cluster.lan"
 ---
-# helmresources Kustomization: first resources that USE Helm-installed CRDs.
-# dependsOn infrastructure so CRDs exist before this runs.
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: helmresources
-  namespace: flux-system
-spec:
-  interval: 5m
-  path: ./helmresources
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: self-2026-flux-talk
-  postBuild:
-    substitute:
-      ENVIRONMENT: "dev"
-      NAMESPACE_PREFIX: "dev"
-      CLUSTER_NAME: "dev-cluster"
-      DOMAIN: "dev-cluster.lan"
-  dependsOn:
-    - name: infrastructure
----
 # apps Kustomization: application deployments.
-# Depends on both infrastructure (operators) and helmresources (ClusterIssuer).
+# dependsOn infrastructure so Traefik exists before IngressRoutes are applied.
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -101,4 +78,3 @@ spec:
       DOMAIN: "dev-cluster.lan"
   dependsOn:
     - name: infrastructure
-    - name: helmresources
