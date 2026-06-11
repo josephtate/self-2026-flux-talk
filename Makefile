@@ -35,7 +35,7 @@ update-dev-branch:
 lint: lint-yaml lint-shell lint-k8s
 
 lint-yaml:
-	yamlfmt -lint -conf .yamlfmt.yaml .
+	yamllint .
 
 lint-shell:
 	find manual/scripts -name "*.sh" -exec shellcheck --severity=warning {} \;
@@ -43,8 +43,8 @@ lint-shell:
 lint-k8s: validate-kustomize
 
 validate-kustomize:
-	@echo "--- kustomize build clusters/dev ---"
-	kustomize build clusters/dev
+	@echo "--- kustomize build clusters/dev/flux-system ---"
+	kustomize build clusters/dev/flux-system
 	@echo "--- kustomize build infrastructure ---"
 	kustomize build infrastructure
 	@echo "--- kustomize build apps ---"

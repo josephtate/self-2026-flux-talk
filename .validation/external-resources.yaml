@@ -17,8 +17,8 @@ resources:
     metadata:
       name: flux-system
       namespace: flux-system
-    # Created by bootstrap.sh from GITHUB_USER + GITHUB_TOKEN
-    # Not in git — contains credentials
+      # Created by bootstrap.sh from GITHUB_USER + GITHUB_TOKEN
+      # Not in git — contains credentials
 
   # Created by bootstrap.sh: environment variable substitution values
   - apiVersion: v1
@@ -26,5 +26,5 @@ resources:
     metadata:
       name: cluster-vars
       namespace: flux-system
-    # Contains GHCR_USERNAME and other per-cluster variables
-    # Set at bootstrap time, not version-controlled
+      # Contains GHCR_USERNAME and other per-cluster variables
+      # Set at bootstrap time, not version-controlled

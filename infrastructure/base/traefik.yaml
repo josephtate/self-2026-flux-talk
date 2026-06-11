@@ -41,5 +41,3 @@ spec:
       enabled: true
       isDefaultClass: true
       name: private
-    # postBuild.substitute injects NAMESPACE_PREFIX, CLUSTER_NAME, DOMAIN
-    # into this HelmRelease at reconcile time — no separate overlays needed
