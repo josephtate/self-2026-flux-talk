@@ -1,7 +1,7 @@
 ENVIRONMENT ?= dev
 CLUSTER_NAME ?= dev-cluster
 
-.PHONY: bootstrap-dev teardown-dev lint validate-kustomize update-dev-branch minikube-start
+.PHONY: bootstrap-dev teardown-dev lint validate-kustomize update-dev-branch minikube-start reconcile
 
 # ── Bootstrap / Teardown ─────────────────────────────────────────────────────
 
@@ -58,3 +58,9 @@ flux-status:
 
 flux-watch:
 	flux get kustomizations --watch
+
+reconcile:
+	flux reconcile source git self-2026-flux-talk
+	flux reconcile kustomization flux-system
+	flux reconcile kustomization infrastructure --with-source
+	flux reconcile kustomization apps --with-source
