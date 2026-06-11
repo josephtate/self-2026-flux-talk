@@ -8,7 +8,7 @@ data:
   index.html: |
     <!DOCTYPE html>
     <html>
-    <head><title>FluxCD Demo</title>
+    <head><meta charset="utf-8"><title>FluxCD Demo</title>
     <style>
       body { font-family: sans-serif; max-width: 600px; margin: 4rem auto; padding: 0 1rem; }
       h1 { color: #326CE5; }
