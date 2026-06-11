@@ -127,6 +127,8 @@ create_git_source() {
     info "Creating cluster-vars ConfigMap for Flux postBuild substitution..."
     kubectl create configmap cluster-vars \
         --from-literal=GITHUB_BRANCH="$GITHUB_BRANCH" \
+        --from-literal=GITHUB_OWNER="$GITHUB_OWNER" \
+        --from-literal=GITHUB_REPO="$GITHUB_REPO" \
         --from-literal=GHCR_USERNAME="$GITHUB_USER" \
         --namespace=flux-system \
         --context="$CLUSTER_NAME" \
