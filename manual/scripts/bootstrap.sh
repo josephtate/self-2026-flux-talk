@@ -70,15 +70,38 @@ check_prerequisites() {
     success "Prerequisites OK (branch: $GITHUB_BRANCH)"
 }
 
+preload_flux_images() {
+    info "Pre-loading Flux images into minikube to avoid slow registry pulls..."
+
+    local images
+    images=$(flux install --dry-run 2>/dev/null | grep 'image:' | awk '{print $2}' | sort -u)
+
+    if [[ -z "$images" ]]; then
+        warn "Could not determine Flux images — skipping pre-load"
+        return 0
+    fi
+
+    for img in $images; do
+        info "Pulling $img to host Docker cache..."
+        docker pull "$img" || warn "Could not pull $img, will try from within minikube"
+        info "Loading $img into minikube..."
+        minikube image load "$img" -p "$CLUSTER_NAME" || warn "Could not load $img into minikube"
+    done
+
+    success "Flux images pre-loaded"
+}
+
 install_flux() {
     if flux check --context="$CLUSTER_NAME" &>/dev/null; then
         success "Flux already installed — skipping"
         return 0
     fi
 
+    preload_flux_images
+
     info "Installing Flux controllers via 'flux install'..."
     info "(not 'flux bootstrap' — see script header for why)"
-    flux install --context="$CLUSTER_NAME"
+    flux install --context="$CLUSTER_NAME" --timeout=10m
 
     info "Waiting for Flux controllers..."
     kubectl wait --for=condition=ready pod -l app=helm-controller \
