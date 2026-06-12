@@ -32,7 +32,7 @@ spec:
     substitute:
       ENVIRONMENT: "dev"
       NAMESPACE_PREFIX: "dev"
-      CLUSTER_NAME: "dev-cluster"
+      CLUSTER_NAME: "flux-talk"
 ---
 # infrastructure Kustomization: installs Helm chart operators.
 # wait: true ensures CRDs are registered before helmresources tries to use them.
@@ -53,8 +53,8 @@ spec:
     substitute:
       ENVIRONMENT: "dev"
       NAMESPACE_PREFIX: "dev"
-      CLUSTER_NAME: "dev-cluster"
-      DOMAIN: "dev-cluster.lan"
+      CLUSTER_NAME: "flux-talk"
+      DOMAIN: "flux-talk.lan"
 ---
 # apps Kustomization: application deployments.
 # dependsOn infrastructure so Traefik exists before IngressRoutes are applied.
@@ -74,7 +74,7 @@ spec:
     substitute:
       ENVIRONMENT: "dev"
       NAMESPACE_PREFIX: "dev"
-      CLUSTER_NAME: "dev-cluster"
-      DOMAIN: "dev-cluster.lan"
+      CLUSTER_NAME: "flux-talk"
+      DOMAIN: "flux-talk.lan"
   dependsOn:
     - name: infrastructure

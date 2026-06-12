@@ -22,7 +22,7 @@ set -euo pipefail
 # tracks that branch without any shared-branch collisions.
 
 ENVIRONMENT="${1:-dev}"
-CLUSTER_NAME="${CLUSTER_NAME:-dev-cluster}"
+CLUSTER_NAME="${CLUSTER_NAME:-flux-talk}"
 GITHUB_USER="${GITHUB_USER:-}"
 GITHUB_TOKEN="${GITHUB_TOKEN:-}"
 GITHUB_REPO="${GITHUB_REPO:-self-2026-flux-talk}"

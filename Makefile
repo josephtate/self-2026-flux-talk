@@ -1,5 +1,5 @@
 ENVIRONMENT ?= dev
-CLUSTER_NAME ?= dev-cluster
+CLUSTER_NAME ?= flux-talk
 NAMESPACE_PREFIX ?= dev
 
 .PHONY: bootstrap-dev teardown-dev lint validate-kustomize update-dev-branch minikube-start reconcile open-app
