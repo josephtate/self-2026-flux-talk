@@ -9,6 +9,7 @@ marp: true
 ## Making K8s Deployments Repeatable and Reversible
 
 **Joseph Tate**
+SELF 2026
 
 ---
 
@@ -249,7 +250,9 @@ git revert HEAD --no-edit && git push
 
 # Questions?
 
-_Vault, PKI, External Secrets Operator, and the full secrets pipeline: next talk._
+_Vault, PKI, External Secrets Operator, and the full secrets pipeline: previous talk._
+
+https://github.com/josephtate/self-2026-flux-talk
 
 <!-- Common questions:
   "Why Flux over ArgoCD?" — Both are good. Flux has no UI (some see this as a feature), composable with native K8s patterns. ArgoCD has a great dashboard.
