@@ -58,7 +58,7 @@ flux-status:
 	flux get helmreleases -A
 
 flux-watch:
-	flux get kustomizations --watch
+	flux get kustomizations --watch --timeout=10m
 
 open-app:
 	@echo "Opening http://localhost:8080 — Ctrl-C to stop"
