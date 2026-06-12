@@ -74,7 +74,7 @@ preload_flux_images() {
     info "Pre-loading Flux images into minikube to avoid slow registry pulls..."
 
     local images
-    images=$(flux install --dry-run 2>/dev/null | grep 'image:' | awk '{print $2}' | sort -u)
+    images=$(flux install --export 2>/dev/null | grep 'image:' | awk '{print $2}' | sort -u) || true
 
     if [[ -z "$images" ]]; then
         warn "Could not determine Flux images — skipping pre-load"
