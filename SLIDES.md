@@ -11,6 +11,8 @@ marp: true
 **Joseph Tate**
 SELF 2026
 
+Slides and code: https://github.com/josephtate/self-2026-flux-talk
+
 ---
 
 # What Is GitOps?
@@ -18,7 +20,9 @@ SELF 2026
 - Git is the source of truth for cluster state
 - A controller reconciles the cluster toward git — continuously
 - Drift is automatically corrected
-- If it's not in git, it doesn't belong in the cluster
+- If it's not in git, it doesn't belong in the cluster*
+
+<sub>* Except in a few very special circumstances</sub>
 
 <!-- "GitOps is the practice of using a git repository as the single source of truth for the desired state of your system. A controller — not you, not a CI job — continuously watches that repo and reconciles the live system to match." GitOps is a principle, not a product. FluxCD is one implementation. ArgoCD is another popular one. -->
 
@@ -56,10 +60,12 @@ SELF 2026
 
 # Resource Adoption
 
+<sub>Here are the specific reasons for non-git resources</sub>
+
 - Flux can adopt resources it didn't create: pre-existing resource + matching manifest = Flux takes over
 - Secret *references* live in git (ExternalSecret, Volume mounts) — secret *contents* do not
 - CA certificates, TLS certs, and issued keys are provisioned externally; Flux references them
-- `prune: true` only removes what Flux applied — externally created resources are never in its inventory
+- `prune: true` only removes what Flux applied — externally created resources (that aren't adopted) are never in its inventory
 
 <!-- Example: Our secret scripts create full ExternalSecrets and their mount points so that we can test that the secret was created successfully and is accessible through K8s, but then it must be adopted by Flux in case the application configuration changes. -->
 
@@ -96,7 +102,7 @@ dependsOn: [{ name: infrastructure }]
 # Repository Layout
 
 ```
-platform-k8s/
+base-git-repository/
 ├── clusters/
 │   ├── dev/flux-system/     ← GitRepository + Kustomizations (per env)
 │   └── prod/flux-system/
@@ -160,6 +166,7 @@ apps             (IngressRoutes, resources that use operator CRDs)
 - Same operators, same ingress, same secrets pipeline
 - The merge to main is not (as much of) a leap of faith
 - Reduces bad deploys, quickfix PRs
+- Lets you squash debug commits before merging to main
 
 ---
 
