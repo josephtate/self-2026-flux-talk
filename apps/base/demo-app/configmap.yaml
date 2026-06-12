@@ -17,7 +17,7 @@ data:
     </head>
     <body>
       <h1>GitOps with FluxCD</h1>
-      <p class="version">v1</p>
+      <p class="version">v2</p>
       <p>Edit <code>apps/base/demo-app/configmap.yaml</code>, commit, push — Flux does the rest.</p>
     </body>
     </html>
